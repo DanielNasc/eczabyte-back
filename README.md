@@ -9,5 +9,6 @@ Esteja seguro de ter o docker instalado antes de prosseguir com os passos. Segue
   cd y-api
   docker compose up -d
   npm install
+  npx prisma migrate dev --name init
   npm run start:dev
 ```
