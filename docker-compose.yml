@@ -1,0 +1,40 @@
+services:
+  database:
+    image: postgres:15.5-alpine
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=twitter
+      - POSTGRES_PORT=5432
+    networks:
+      - db-net
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: 'pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB'
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # app:
+  #   build:
+  #     context: .
+  #   ports:
+  #     - 3000:3000
+  #   environment:
+  #     - DATABASE_URL=postgresql://user:password@database:5432/twitter?schema=public
+  #     - NPM_RUN_COMMAND=npm run start:migrate:dev
+  #   networks:
+  #     - db-net
+  #   depends_on:
+  #     - database
+
+networks:
+  db-net:
+
+volumes:
+  pg-data:
+    driver: local

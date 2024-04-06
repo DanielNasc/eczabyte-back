@@ -1,6 +1,10 @@
+# envs
+.env
+
 # compiled output
 /dist
 /node_modules
+migrations
 
 # Logs
 logs
