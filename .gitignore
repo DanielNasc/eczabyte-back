@@ -1,5 +1,9 @@
 # envs
 .env
+prisma/migrations
+prisma/dev.db-journal
+
+prisma/dev.db
 
 # compiled output
 /dist
