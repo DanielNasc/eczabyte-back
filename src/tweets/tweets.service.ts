@@ -59,7 +59,6 @@ export class TweetsService {
   }
 
   likeTweet(userId: number, tweetId: number) {
-    tweetId = Number(tweetId);
     return this.prisma.like.create({
       data: {
         userId,
