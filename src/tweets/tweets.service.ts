@@ -13,7 +13,7 @@ export class TweetsService {
         content: createTweetDto.content,
         author: {
           connect: {
-            id: createTweetDto.idUser,
+            id: Number(createTweetDto.idUser),
           },
         },
       },
@@ -21,11 +21,18 @@ export class TweetsService {
   }
 
   findAll() {
-    return this.prisma.tweet.findMany();
+    return this.prisma.tweet.findMany({
+      include: {
+        likes: true,
+      },
+    });
   }
 
   findOne(id: number) {
     return this.prisma.tweet.findMany({
+      include: {
+        likes: true,
+      },
       where: {
         id,
       },
@@ -47,6 +54,24 @@ export class TweetsService {
     return this.prisma.tweet.delete({
       where: {
         id,
+      },
+    });
+  }
+
+  likeTweet(userId: number, tweetId: number) {
+    tweetId = Number(tweetId);
+    return this.prisma.like.create({
+      data: {
+        userId,
+        tweetId,
+      },
+    });
+  }
+
+  getUserLikes(userId: number) {
+    return this.prisma.like.findMany({
+      where: {
+        userId,
       },
     });
   }
