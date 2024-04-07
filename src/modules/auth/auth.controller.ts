@@ -1,6 +1,7 @@
-import { Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
+import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('api/auth')
 export class AuthController {
@@ -10,5 +11,12 @@ export class AuthController {
   @Post('login')
   async login(@Req() req: any) {
     return await this.authService.login(req.user);
+  }
+
+  @Get('check-token')
+  @UseGuards(JwtAuthGuard)
+  async checkToken() {
+    console.log('okoko');
+    return { message: 'Token is valid' };
   }
 }
