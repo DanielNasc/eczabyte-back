@@ -16,7 +16,6 @@ export class AuthController {
   @Get('check-token')
   @UseGuards(JwtAuthGuard)
   async checkToken() {
-    console.log('okoko');
     return { message: 'Token is valid' };
   }
 }
