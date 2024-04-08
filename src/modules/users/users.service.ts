@@ -59,7 +59,7 @@ export class UsersService {
     } catch (error) {
       throw new HttpException(
         {
-          status: HttpStatus.CONFLICT,
+          status: HttpStatus.BAD_REQUEST,
           error: 'O Email ou o Username já existem',
         },
         HttpStatus.CONFLICT,
