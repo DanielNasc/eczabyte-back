@@ -14,13 +14,13 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
+  id       String  @id @default(uuid())
   username String  @unique
   email    String  @unique
   password String
   tweets   Tweet[]
 
-  Like Like[]
+  likes Like[]
 }
 
 model Tweet {
@@ -28,14 +28,16 @@ model Tweet {
   content     String
   createdAt   DateTime @default(now())
   author      User     @relation(fields: [authorId], references: [id])
-  authorId    Int
+  authorId    String
   likes       Like[]
 }
 
 model Like {
   id      Int   @id @default(autoincrement())
   user    User  @relation(fields: [userId], references: [id])
-  userId  Int
+  userId  String
   tweet   Tweet @relation(fields: [tweetId], references: [id])
   tweetId Int
+
+  @@unique([userId, tweetId])
 }

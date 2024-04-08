@@ -27,26 +27,26 @@ export class TweetsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.tweetsService.findOne(+id);
+    return this.tweetsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTweetDto: UpdateTweetDto) {
-    return this.tweetsService.update(+id, updateTweetDto);
+    return this.tweetsService.update(id, updateTweetDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.tweetsService.remove(+id);
+    return this.tweetsService.remove(id);
   }
 
   @Get(':id/getlikes')
   getLikes(@Param('id') id: string) {
-    return this.tweetsService.getUserLikes(+id);
+    return this.tweetsService.getUserLikes(id);
   }
 
   @Post(':id/like')
-  likeTweet(@Param('id') id: number, @Body('userId') userId: number) {
-    return this.tweetsService.likeTweet(+userId, +id);
+  likeTweet(@Param('id') id: number, @Body('userId') userId: string) {
+    return this.tweetsService.likeTweet(userId, id);
   }
 }
