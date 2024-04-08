@@ -1,21 +1,33 @@
-import { IsNotEmpty, IsEmail, Matches, IsOptional, MinLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsEmail,
+  Matches,
+  IsOptional,
+  MinLength,
+} from 'class-validator';
 import { MessagesHelper } from 'src/helpers/messages.helper';
 import { RegexHelper } from 'src/helpers/regex.helper';
 
 export class UpdateUserDto {
-  @IsOptional()
+  @IsOptional() // Torna o campo opcional, pois o usuário pode não querer atualizar o nome de usuário
+  @IsNotEmpty()
   @MinLength(3, {
     message: 'O nome de usuário deve ter no mínimo 3 caracteres',
   })
   username?: string;
 
-  @IsOptional()
-  @IsEmail({}, {
-    message: 'O email deve ser um endereço de email válido',
-  })
+  @IsOptional() // Torna o campo opcional, pois o usuário pode não querer atualizar o email
+  @IsNotEmpty()
+  @IsEmail(
+    {},
+    {
+      message: 'O email deve ser um endereço de email válido',
+    },
+  )
   email?: string;
 
-  @IsOptional()
+  @IsOptional() // Torna o campo opcional, pois o usuário pode não querer atualizar a senha
+  @IsNotEmpty()
   @Matches(RegexHelper.password, {
     message: MessagesHelper.PASSWORD_VALID,
   })
@@ -24,6 +36,7 @@ export class UpdateUserDto {
   })
   password?: string;
 
+  // Adicione mais campos conforme necessário, por exemplo:
   @IsOptional()
   country?: string;
 
