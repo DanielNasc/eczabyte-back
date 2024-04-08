@@ -49,12 +49,25 @@ export class UsersService {
   }
 
   async create(createUserDto: CreateUserDto) {
-    const hashedPassword = await bcrypt.hashSync(
-      createUserDto.password,
-      roundsOfHashing,
-    );
-    createUserDto.password = hashedPassword;
-    return await this.usersRepository.create(createUserDto);
+    try {
+      const hashedPassword = await bcrypt.hashSync(
+        createUserDto.password,
+        roundsOfHashing,
+      );
+      createUserDto.password = hashedPassword;
+      return await this.usersRepository.create(createUserDto);
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.CONFLICT,
+          error: 'O Email ou o Username já existem',
+        },
+        HttpStatus.CONFLICT,
+        {
+          cause: error,
+        },
+      );
+    }
   }
 
   async update(id: string, createUserDto: UpdateUserDto) {
