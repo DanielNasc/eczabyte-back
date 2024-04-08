@@ -57,8 +57,15 @@ export class UsersService {
     return await this.usersRepository.create(createUserDto);
   }
 
-  async update(id: string, createUserDto: UpdateUserDto) {
-    return await this.usersRepository.update(id, createUserDto);
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    if (updateUserDto.password) {
+      const hashedPassword = await bcrypt.hashSync(
+        updateUserDto.password,
+        roundsOfHashing,
+      );
+      updateUserDto.password = hashedPassword;
+    }
+    return await this.usersRepository.update(id, updateUserDto);
   }
 
   async delete(id: string) {
