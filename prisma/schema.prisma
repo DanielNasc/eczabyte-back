@@ -6,15 +6,15 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
-
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id       Int     @id @map("_id")
+  id       Int     @id @default(autoincrement())
   username String  @unique
   email    String  @unique
   password String
@@ -24,7 +24,7 @@ model User {
 }
 
 model Tweet {
-  id          Int      @id @map("_id")
+  id          Int      @id @default(autoincrement())
   content     String
   createdAt   DateTime @default(now())
   author      User     @relation(fields: [authorId], references: [id])
@@ -33,7 +33,7 @@ model Tweet {
 }
 
 model Like {
-  id      Int   @id @map("_id")
+  id      Int   @id @default(autoincrement())
   user    User  @relation(fields: [userId], references: [id])
   userId  Int
   tweet   Tweet @relation(fields: [tweetId], references: [id])
