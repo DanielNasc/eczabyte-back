@@ -32,4 +32,10 @@ export class UpdateUserDto {
 
   @IsOptional()
   birthdate?: string;
+
+  @IsOptional()
+  @Matches(RegexHelper.phone, {
+    message: 'O número de telefone deve ser um número de telefone válido',
+  })
+  phone?: string;
 }
