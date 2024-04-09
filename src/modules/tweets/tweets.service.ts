@@ -7,7 +7,7 @@ import { PrismaService } from 'src/service/prisma.service';
 export class TweetsService {
   private prisma = new PrismaService();
 
-  create(createTweetDto: CreateTweetDto) {
+  async create(createTweetDto: CreateTweetDto) {
     return this.prisma.tweet.create({
       data: {
         content: createTweetDto.content,
@@ -20,7 +20,7 @@ export class TweetsService {
     });
   }
 
-  findAll() {
+  async findAll() {
     return this.prisma.tweet.findMany({
       include: {
         likes: true,
@@ -28,18 +28,18 @@ export class TweetsService {
     });
   }
 
-  findOne(id: string) {
+  async findOne(id: string) {
     return this.prisma.tweet.findMany({
       include: {
         likes: true,
       },
       where: {
-        id,
+        authorId: id,
       },
     });
   }
 
-  update(id: string, updateTweetDto: UpdateTweetDto) {
+  async update(id: number, updateTweetDto: UpdateTweetDto) {
     return this.prisma.tweet.update({
       where: {
         id,
@@ -50,7 +50,7 @@ export class TweetsService {
     });
   }
 
-  remove(id: string) {
+  async remove(id: number) {
     return this.prisma.tweet.delete({
       where: {
         id,
@@ -58,7 +58,7 @@ export class TweetsService {
     });
   }
 
-  likeTweet(userId: string, tweetId: number) {
+  async likeTweet(userId: string, tweetId: number) {
     return this.prisma.like.create({
       data: {
         userId,
@@ -67,7 +67,7 @@ export class TweetsService {
     });
   }
 
-  getUserLikes(userId: string) {
+  async getUserLikes(userId: string) {
     return this.prisma.like.findMany({
       where: {
         userId,

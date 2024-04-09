@@ -16,8 +16,8 @@ export class TweetsController {
   constructor(private readonly tweetsService: TweetsService) {}
 
   @Post()
-  create(@Body() createTweetDto: CreateTweetDto) {
-    return this.tweetsService.create(createTweetDto);
+  async create(@Body() createTweetDto: CreateTweetDto) {
+    return await this.tweetsService.create(createTweetDto);
   }
 
   @Get()
@@ -31,12 +31,12 @@ export class TweetsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTweetDto: UpdateTweetDto) {
+  update(@Param('id') id: number, @Body() updateTweetDto: UpdateTweetDto) {
     return this.tweetsService.update(id, updateTweetDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.tweetsService.remove(id);
   }
 
