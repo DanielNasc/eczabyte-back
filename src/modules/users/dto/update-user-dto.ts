@@ -23,19 +23,4 @@ export class UpdateUserDto {
     message: 'A senha deve ter no mínimo 8 caracteres',
   })
   password?: string;
-
-  @IsOptional()
-  country?: string;
-
-  @IsOptional()
-  gender?: string;
-
-  @IsOptional()
-  birthdate?: string;
-
-  @IsOptional()
-  @Matches(RegexHelper.phone, {
-    message: 'O número de telefone deve ser um número de telefone válido',
-  })
-  phone?: string;
 }

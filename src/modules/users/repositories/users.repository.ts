@@ -50,7 +50,7 @@ export class UsersRepository {
     return this.prismaService.user.create({ data });
   }
 
-  async update(id, data: UpdateUserDto) {
+  async update(id: string, data: UpdateUserDto) {
     return this.prismaService.user.update({
       where: { id },
       data,
