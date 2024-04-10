@@ -19,18 +19,20 @@ services:
       timeout: 5s
       retries: 5
 
-  # app:
-  #   build:
-  #     context: .
-  #   ports:
-  #     - 3000:3000
-  #   environment:
-  #     - DATABASE_URL=postgresql://user:password@database:5432/twitter?schema=public
-  #     - NPM_RUN_COMMAND=npm run start:migrate:dev
-  #   networks:
-  #     - db-net
-  #   depends_on:
-  #     - database
+  app:
+    restart: always
+    build:
+      context: .
+    ports:
+      - 3000:3000
+    environment:
+      - DATABASE_URL=postgresql://user:password@database:5432/twitter?schema=public
+      - JWT_SECRET_KEY=my_token__with__ssh-keygen
+      - NPM_RUN_COMMAND=npm run start:migrate:dev
+    networks:
+      - db-net
+    depends_on:
+      - database
 
 networks:
   db-net:
