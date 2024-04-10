@@ -32,6 +32,7 @@ export class TweetsService {
     return this.prisma.tweet.findMany({
       include: {
         likes: true,
+        author: true,
       },
       where: {
         authorId: id,
